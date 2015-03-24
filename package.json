@@ -1,0 +1,31 @@
+{
+  "name": "hiro-vr",
+  "version": "0.0.0",
+  "description": "HIRO VR dependencies.",
+  "scripts": {
+    "start": "gulp build && gulp webserver"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kevingrandon/hiro-vr.git"
+  },
+  "author": "Kevin Grandon <kevingrandon@yahoo.com>",
+  "license": "MPL",
+  "bugs": {
+    "url": "https://github.com/kevingrandon/hiro-vr/issues"
+  },
+  "engines": {
+    "node": "0.12.1"
+  },
+  "devDependencies": {
+    "gulp-babel": "^4.0.0",
+    "babel": "^4.7.16"
+  },
+  "dependencies": {
+    "del": "^1.1.1",
+    "gulp": "3.8.x",
+    "gulp-jshint": "^1.9.4",
+    "gulp-webserver": "^0.9.0",
+    "run-sequence": "^1.0.2"
+  }
+}
