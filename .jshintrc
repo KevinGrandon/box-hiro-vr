@@ -14,7 +14,7 @@
 	"strict": false,
 	"laxcomma": false,
 	"maxerr": 1000,
-	"maxlen": 120,
+	"maxlen": 200,
 	"proto": true,
 	"browser": true,
 	"node": true,
