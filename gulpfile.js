@@ -10,6 +10,7 @@ const SRC_ROOT = './src/';
 const DIST_ROOT = './dist/';
 const DIST_SRC_ROOT = './dist/src/';
 
+
 /**
  * runs jslint on all javascript files found in the src dir.
  */
@@ -24,6 +25,7 @@ gulp.task('lint', function() {
 		.pipe(jshint.reporter('fail'));
 });
 
+
 /**
  * Copy all non-js directory app source/assets/components.
  */
@@ -34,6 +36,7 @@ gulp.task('copy-app', function() {
 		])
 		.pipe(gulp.dest(DIST_SRC_ROOT));
 });
+
 
 /**
  * converts javascript to es5. this allows us to use harmony classes and modules.
@@ -78,6 +81,7 @@ gulp.task('travis', ['lint', 'babel']);
 gulp.task('build', function(cb) {
 	runSequence(['clobber'], ['copy-app'], ['babel', 'lint'], cb);
 });
+
 
 /**
  * Watch for changes on the file system, and rebuild if so.
