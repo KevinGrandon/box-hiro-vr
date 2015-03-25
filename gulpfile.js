@@ -94,7 +94,7 @@ gulp.task('travis', ['lint', 'babel']);
  * Build the app.
  */
 gulp.task('build', function(cb) {
-	runSequence(['clobber'], ['copy-app'], ['babel' /*, 'lint'*/ ], cb);
+	runSequence(['clobber'], ['copy-app'], ['babel', 'lint' ], cb);
 });
 
 

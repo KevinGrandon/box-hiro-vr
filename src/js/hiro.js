@@ -182,7 +182,8 @@ function init() {
 	geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
 	geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
 
-	for (var i = 0, l = geometry.vertices.length; i < l; i++) {
+	var i, l;
+	for (i = 0, l = geometry.vertices.length; i < l; i++) {
 
 		var vertex = geometry.vertices[i];
 		vertex.x += Math.random() * 20 - 10;
@@ -193,7 +194,7 @@ function init() {
 
 	var face;
 
-	for (var i = 0, l = geometry.faces.length; i < l; i++) {
+	for (i = 0, l = geometry.faces.length; i < l; i++) {
 
 		face = geometry.faces[i];
 		face.vertexColors[0] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
@@ -213,7 +214,7 @@ function init() {
 
 	geometry = new THREE.BoxGeometry(20, 20, 20);
 
-	for (var i = 0, l = geometry.faces.length; i < l; i++) {
+	for (i = 0, l = geometry.faces.length; i < l; i++) {
 
 		face = geometry.faces[i];
 		face.vertexColors[0] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
@@ -222,7 +223,7 @@ function init() {
 
 	}
 
-	for (var i = 0; i < 500; i++) {
+	for (i = 0; i < 500; i++) {
 
 		material = new THREE.MeshPhongMaterial({
 			specular: 0xffffff,
