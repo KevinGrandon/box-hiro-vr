@@ -1,6 +1,10 @@
+/* global THREE */
+/* global performance */
+
 var camera, scene, renderer;
 var geometry, material, mesh;
 var controls, canJump;
+var controlsEnabled = false;
 
 var objects = [];
 
@@ -57,7 +61,7 @@ if (havePointerLock) {
 					element.requestPointerLock();
 				}
 
-			}
+			};
 
 			document.addEventListener('fullscreenchange', fullscreenchange, false);
 			document.addEventListener('mozfullscreenchange', fullscreenchange, false);
@@ -82,8 +86,6 @@ if (havePointerLock) {
 
 init();
 animate();
-
-var controlsEnabled = false;
 
 var moveForward = false;
 var moveBackward = false;
@@ -132,7 +134,9 @@ function init() {
 				break;
 
 			case 32: // space
-				if (canJump === true) velocity.y += 350;
+				if (canJump === true) {
+					velocity.y += 350;
+				}
 				canJump = false;
 				break;
 
@@ -187,9 +191,11 @@ function init() {
 
 	}
 
+	var face;
+
 	for (var i = 0, l = geometry.faces.length; i < l; i++) {
 
-		var face = geometry.faces[i];
+		face = geometry.faces[i];
 		face.vertexColors[0] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
 		face.vertexColors[1] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
 		face.vertexColors[2] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
@@ -209,7 +215,7 @@ function init() {
 
 	for (var i = 0, l = geometry.faces.length; i < l; i++) {
 
-		var face = geometry.faces[i];
+		face = geometry.faces[i];
 		face.vertexColors[0] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
 		face.vertexColors[1] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
 		face.vertexColors[2] = new THREE.Color().setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
@@ -224,7 +230,7 @@ function init() {
 			vertexColors: THREE.VertexColors
 		});
 
-		var mesh = new THREE.Mesh(geometry, material);
+		mesh = new THREE.Mesh(geometry, material);
 		mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
 		mesh.position.y = Math.floor(Math.random() * 20) * 20 + 10;
 		mesh.position.z = Math.floor(Math.random() * 20 - 10) * 20;
@@ -279,11 +285,19 @@ function animate() {
 
 		velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
-		if (moveForward) velocity.z -= 400.0 * delta;
-		if (moveBackward) velocity.z += 400.0 * delta;
+		if (moveForward) {
+			velocity.z -= 400.0 * delta;
+		}
+		if (moveBackward) {
+			velocity.z += 400.0 * delta;
+		}
 
-		if (moveLeft) velocity.x -= 400.0 * delta;
-		if (moveRight) velocity.x += 400.0 * delta;
+		if (moveLeft) {
+			velocity.x -= 400.0 * delta;
+		}
+		if (moveRight) {
+			velocity.x += 400.0 * delta;
+		}
 
 		if (isOnObject === true) {
 			velocity.y = Math.max(0, velocity.y);
