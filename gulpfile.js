@@ -27,6 +27,21 @@ gulp.task('lint', function() {
 
 
 /**
+ * Install pre-commit hook for app.
+ */
+gulp.task('pre-commit', function() {
+	return gulp.src(['./pre-commit'])
+		.pipe(gulp.dest('.git/hooks/'));
+});
+
+
+/**
+ * Setup steps after an npm install.
+ */
+gulp.task('install', ['copy-app', 'pre-commit']);
+
+
+/**
  * Copy all non-js directory app source/assets/components.
  */
 gulp.task('copy-app', function() {
@@ -79,7 +94,7 @@ gulp.task('travis', ['lint', 'babel']);
  * Build the app.
  */
 gulp.task('build', function(cb) {
-	runSequence(['clobber'], ['copy-app'], ['babel'/*, 'lint'*/], cb);
+	runSequence(['clobber'], ['copy-app'], ['babel' /*, 'lint'*/ ], cb);
 });
 
 
