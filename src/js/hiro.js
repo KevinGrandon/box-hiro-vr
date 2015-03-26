@@ -1,6 +1,160 @@
 /* global THREE */
 /* global performance */
 
+
+var bookmarks = [
+	{
+		url: 'bbc.com'
+	},
+
+	{
+		url: 'drive.google.com'
+	},
+
+	{
+		url: 'facebook.com'
+	},
+
+	{
+		url: 'google.com'
+	},
+
+	{
+		url: 'live.com'
+	},
+
+	{
+		url: 'netflix.com'
+	},
+
+	{
+		url: 'qq.com'
+	},
+
+	{
+		url: 'sina.com.cn'
+	},
+
+	{
+		url: 'tumblr.com'
+	},
+
+	{
+		url: 'vox.com'
+	},
+
+	{
+		url: 'wordpress.com'
+	},
+
+	{
+		url: 'yahoo.com'
+	},
+
+	{
+		url: 'amazon.com'
+	},
+
+	{
+		url: 'bing.com'
+	},
+
+	{
+		url: 'dropbox.com'
+	},
+
+	{
+		url: 'firewatchgame.com'
+	},
+
+	{
+		url: 'huffingtonpost.com'
+	},
+
+	{
+		url: 'mail.google.com'
+	},
+
+	{
+		url: 'nytimes.com'
+	},
+
+	{
+		url: 'quizlet.com'
+	},
+
+	{
+		url: 'taobao.com'
+	},
+
+	{
+		url: 'twitter.com'
+	},
+
+	{
+		url: 'weibo.com'
+	},
+
+	{
+		url: 'wordpress.org'
+	},
+
+	{
+		url: 'yelp.com'
+	},
+
+	{
+		url: 'baidu.com'
+	},
+
+	{
+		url: 'buzzfeed.com'
+	},
+
+	{
+		url: 'economist.com'
+	},
+
+	{
+		url: 'github.com'
+	},
+
+	{
+		url: 'linkedin.com'
+	},
+
+	{
+		url: 'medium.com'
+	},
+
+	{
+		url: 'pinterest.com'
+	},
+
+	{
+		url: 'qz.com'
+	},
+
+	{
+		url: 'tmall.com'
+	},
+
+	{
+		url: 'vimeo.com'
+	},
+
+	{
+		url: 'wikipedia.org'
+	},
+
+	{
+		url: 'yahoo.co.jp'
+	},
+	{
+		url: 'youtube.com'
+	}
+];
+
 var camera, scene, renderer;
 var geometry, material, mesh;
 var controls, canJump;
@@ -137,7 +291,7 @@ function init() {
 				if (canJump === true) {
 					velocity.y += 350;
 				}
-				canJump = false;
+				//canJump = false;
 				break;
 
 		}
@@ -223,13 +377,19 @@ function init() {
 
 	}
 
-	for (i = 0; i < 500; i++) {
+	for (i = 0; i < bookmarks.length; i++) {
 
+		/*
+		// Default material.
 		material = new THREE.MeshPhongMaterial({
 			specular: 0xffffff,
 			shading: THREE.FlatShading,
 			vertexColors: THREE.VertexColors
 		});
+		*/
+    material = new THREE.MeshLambertMaterial({
+        map: THREE.ImageUtils.loadTexture('/tiles/' + bookmarks[i].url + '.png')
+    });
 
 		mesh = new THREE.Mesh(geometry, material);
 		mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
@@ -311,7 +471,6 @@ function animate() {
 		controls.getObject().translateZ(velocity.z * delta);
 
 		if (controls.getObject().position.y < 10) {
-
 			velocity.y = 0;
 			controls.getObject().position.y = 10;
 
