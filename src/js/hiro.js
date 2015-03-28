@@ -267,6 +267,7 @@ function init() {
 	cssRenderer.setSize(window.innerWidth, window.innerHeight);
 	cssRenderer.domElement.style.position = 'absolute';
 	cssRenderer.domElement.style.top = 0;
+	document.body.appendChild(cssRenderer.domElement);
 
 	var light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
 	light.position.set(0.5, 1, 0.75);
@@ -405,7 +406,12 @@ function init() {
 		mesh = new THREE.Mesh(geometry, material);
 
 		mesh.callback = function() {
-			//window.open(bookmark.url, '_blank');
+
+			// If we've already rendered the iframe, return.
+			if (bookmark.frame) {
+				return;
+			}
+
 			var iframe = document.createElement('iframe');
 			iframe.src = 'http://' + bookmark.url;
 			iframe.style.width = '1000px';
@@ -421,7 +427,10 @@ function init() {
 
 			console.log('Adding iframe object to body.', iframe);
 
-			cssScene.add(iframe);
+			cssScene.add(iframe3DObj);
+
+			bookmark.t3DObj = iframe3DObj;
+			bookmark.frame = iframe;
 		};
 
 		mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
