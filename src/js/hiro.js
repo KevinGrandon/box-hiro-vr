@@ -377,8 +377,7 @@ function init() {
 
 	}
 
-	for (i = 0; i < bookmarks.length; i++) {
-
+	bookmarks.forEach(bookmark => {
 		/*
 		// Default material.
 		material = new THREE.MeshPhongMaterial({
@@ -388,10 +387,15 @@ function init() {
 		});
 		*/
     material = new THREE.MeshLambertMaterial({
-        map: THREE.ImageUtils.loadTexture('/tiles/' + bookmarks[i].url + '.png')
+        map: THREE.ImageUtils.loadTexture('/tiles/' + bookmark.url + '.png')
     });
 
 		mesh = new THREE.Mesh(geometry, material);
+
+		mesh.callback = function() {
+			window.open(bookmark.url, '_blank');
+		};
+
 		mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
 		mesh.position.y = Math.floor(Math.random() * 20) * 20 + 10;
 		mesh.position.z = Math.floor(Math.random() * 20 - 10) * 20;
@@ -401,7 +405,7 @@ function init() {
 
 		objects.push(mesh);
 
-	}
+	});
 
 	//
 
@@ -461,6 +465,8 @@ function animate() {
 		}
 
 		if (isOnObject === true) {
+			intersections[0].object.callback();
+
 			velocity.y = Math.max(0, velocity.y);
 
 			canJump = true;
