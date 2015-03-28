@@ -1,6 +1,8 @@
 /* global THREE */
 /* global performance */
 
+import Hotkeys from '/js/hotkeys.js';
+new Hotkeys();
 
 var bookmarks = [
 	{
@@ -156,6 +158,7 @@ var bookmarks = [
 ];
 
 var camera, scene, renderer;
+var cssScene, cssRenderer;
 var geometry, material, mesh;
 var controls, canJump;
 var controlsEnabled = false;
@@ -255,6 +258,15 @@ function init() {
 
 	scene = new THREE.Scene();
 	scene.fog = new THREE.Fog(0xffffff, 0, 750);
+
+	// Initialize the CSS Scene for embedded HTML elements.
+	// Examples of HTML elements include iframes for fallback 2D content.
+	cssScene = new THREE.Scene();
+
+	cssRenderer = new THREE.CSS3DRenderer();
+	cssRenderer.setSize(window.innerWidth, window.innerHeight);
+	cssRenderer.domElement.style.position = 'absolute';
+	cssRenderer.domElement.style.top = 0;
 
 	var light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
 	light.position.set(0.5, 1, 0.75);
@@ -393,7 +405,23 @@ function init() {
 		mesh = new THREE.Mesh(geometry, material);
 
 		mesh.callback = function() {
-			window.open(bookmark.url, '_blank');
+			//window.open(bookmark.url, '_blank');
+			var iframe = document.createElement('iframe');
+			iframe.src = 'http://' + bookmark.url;
+			iframe.style.width = '1000px';
+			iframe.style.height = '1000px';
+
+			var iframe3DObj = new THREE.CSS3DObject(iframe);
+
+			var mPos = mesh.position;
+			iframe3DObj.position.set(mPos.x, mPos.y, mPos.z);
+
+			var mRot = mesh.rotation;
+			iframe3DObj.rotation.set(mRot.x, mRot.y, mRot.z);
+
+			console.log('Adding iframe object to body.', iframe);
+
+			cssScene.add(iframe);
 		};
 
 		mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
@@ -489,5 +517,6 @@ function animate() {
 	}
 
 	renderer.render(scene, camera);
+	cssRenderer.render(cssScene, camera);
 
 }
