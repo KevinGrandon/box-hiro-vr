@@ -1,161 +1,11 @@
 /* global THREE */
 /* global performance */
 
+import Bookmarks from '/js/bookmarks.js';
+var bookmarks = new Bookmarks();
+
 import Hotkeys from '/js/hotkeys.js';
 new Hotkeys();
-
-var bookmarks = [
-	{
-		url: 'bbc.com'
-	},
-
-	{
-		url: 'drive.google.com'
-	},
-
-	{
-		url: 'facebook.com'
-	},
-
-	{
-		url: 'google.com'
-	},
-
-	{
-		url: 'live.com'
-	},
-
-	{
-		url: 'netflix.com'
-	},
-
-	{
-		url: 'qq.com'
-	},
-
-	{
-		url: 'sina.com.cn'
-	},
-
-	{
-		url: 'tumblr.com'
-	},
-
-	{
-		url: 'vox.com'
-	},
-
-	{
-		url: 'wordpress.com'
-	},
-
-	{
-		url: 'yahoo.com'
-	},
-
-	{
-		url: 'amazon.com'
-	},
-
-	{
-		url: 'bing.com'
-	},
-
-	{
-		url: 'dropbox.com'
-	},
-
-	{
-		url: 'firewatchgame.com'
-	},
-
-	{
-		url: 'huffingtonpost.com'
-	},
-
-	{
-		url: 'mail.google.com'
-	},
-
-	{
-		url: 'nytimes.com'
-	},
-
-	{
-		url: 'quizlet.com'
-	},
-
-	{
-		url: 'taobao.com'
-	},
-
-	{
-		url: 'twitter.com'
-	},
-
-	{
-		url: 'weibo.com'
-	},
-
-	{
-		url: 'wordpress.org'
-	},
-
-	{
-		url: 'yelp.com'
-	},
-
-	{
-		url: 'baidu.com'
-	},
-
-	{
-		url: 'buzzfeed.com'
-	},
-
-	{
-		url: 'economist.com'
-	},
-
-	{
-		url: 'github.com'
-	},
-
-	{
-		url: 'linkedin.com'
-	},
-
-	{
-		url: 'medium.com'
-	},
-
-	{
-		url: 'pinterest.com'
-	},
-
-	{
-		url: 'qz.com'
-	},
-
-	{
-		url: 'tmall.com'
-	},
-
-	{
-		url: 'vimeo.com'
-	},
-
-	{
-		url: 'wikipedia.org'
-	},
-
-	{
-		url: 'yahoo.co.jp'
-	},
-	{
-		url: 'youtube.com'
-	}
-];
 
 var camera, scene, renderer;
 var cssScene, cssRenderer;
@@ -164,6 +14,9 @@ var controls, canJump;
 var controlsEnabled = false;
 
 var objects = [];
+
+// Saved bookmarks.
+var allBookmarks = [];
 
 var raycaster;
 
@@ -241,8 +94,11 @@ if (havePointerLock) {
 
 }
 
-init();
-animate();
+bookmarks.getAll().then(foundBookmarks => {
+	allBookmarks = foundBookmarks;
+	init();
+	animate();
+});
 
 var moveForward = false;
 var moveBackward = false;
@@ -390,7 +246,7 @@ function init() {
 
 	}
 
-	bookmarks.forEach(bookmark => {
+	allBookmarks.forEach(bookmark => {
 		/*
 		// Default material.
 		material = new THREE.MeshPhongMaterial({
