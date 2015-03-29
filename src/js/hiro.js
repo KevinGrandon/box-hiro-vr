@@ -122,8 +122,11 @@ function init() {
 	cssRenderer = new THREE.CSS3DRenderer();
 	cssRenderer.setSize(window.innerWidth, window.innerHeight);
 	cssRenderer.domElement.style.position = 'absolute';
-	cssRenderer.domElement.style.top = 0;
-	document.body.appendChild(cssRenderer.domElement);
+	cssRenderer.domElement.style.margin	  = 0;
+	cssRenderer.domElement.style.padding  = 0;
+
+	var fallbackWindowContainer = document.getElementById('fallback-windows');
+	fallbackWindowContainer.appendChild(cssRenderer.domElement);
 
 	var light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
 	light.position.set(0.5, 1, 0.75);
@@ -230,8 +233,8 @@ function init() {
 		vertexColors: THREE.VertexColors
 	});
 
-	mesh = new THREE.Mesh(geometry, material);
-	scene.add(mesh);
+	var floorMesh = new THREE.Mesh(geometry, material);
+	scene.add(floorMesh);
 
 	// objects
 
@@ -247,14 +250,6 @@ function init() {
 	}
 
 	allBookmarks.forEach(bookmark => {
-		/*
-		// Default material.
-		material = new THREE.MeshPhongMaterial({
-			specular: 0xffffff,
-			shading: THREE.FlatShading,
-			vertexColors: THREE.VertexColors
-		});
-		*/
     material = new THREE.MeshLambertMaterial({
         map: THREE.ImageUtils.loadTexture('/tiles/' + bookmark.url + '.png')
     });
@@ -270,15 +265,15 @@ function init() {
 
 			var iframe = document.createElement('iframe');
 			iframe.src = 'http://' + bookmark.url;
-			iframe.style.width = '1000px';
-			iframe.style.height = '1000px';
+			iframe.style.width = window.innerWidth;
+			iframe.style.height = window.innerHeight;
 
 			var iframe3DObj = new THREE.CSS3DObject(iframe);
 
-			var mPos = mesh.position;
+			var mPos = floorMesh.position;
 			iframe3DObj.position.set(mPos.x, mPos.y, mPos.z);
 
-			var mRot = mesh.rotation;
+			var mRot = floorMesh.rotation;
 			iframe3DObj.rotation.set(mRot.x, mRot.y, mRot.z);
 
 			console.log('Adding iframe object to body.', iframe);
@@ -287,6 +282,8 @@ function init() {
 
 			bookmark.t3DObj = iframe3DObj;
 			bookmark.frame = iframe;
+
+			document.body.classList.add('fallback-active');
 		};
 
 		mesh.position.x = Math.floor(Math.random() * 20 - 10) * 20;
@@ -381,7 +378,7 @@ function animate() {
 
 	}
 
-	renderer.render(scene, camera);
 	cssRenderer.render(cssScene, camera);
+	renderer.render(scene, camera);
 
 }

@@ -2,3 +2,17 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+#fallback-windows {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #000;
+	display: none;
+}
+
+body.fallback-active #fallback-windows {
+	display: block;
+}
